@@ -1,4 +1,4 @@
-import { app, nativeTheme } from "electron";
+import { app, type BrowserWindow, nativeTheme } from "electron";
 import * as path from "node:path";
 import * as fs from "node:fs/promises";
 import * as fsSync from "node:fs";
@@ -7,7 +7,7 @@ import { parseTarGzip } from "nanotar";
 const logger = moonlightHost.getLogger("nativeFixes/host");
 const enabledFeatures = app.commandLine.getSwitchValue("enable-features").split(",");
 
-moonlightHost.events.on("window-created", function (browserWindow) {
+moonlightHost.events.on("window-created", function (browserWindow: BrowserWindow) {
   if (moonlightHost.getConfigOption<boolean>("nativeFixes", "devtoolsThemeFix") ?? true) {
     browserWindow.webContents.on("devtools-opened", () => {
       if (!nativeTheme.shouldUseDarkColors) return;
